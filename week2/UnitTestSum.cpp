@@ -14,6 +14,9 @@ int nums_6[] = {};
 int nums_7[] = {25};
 int nums_8[] = {-25};
 
+int nums_9[] = {-1, -2, -3, 8};
+
+
 //all prefix sums should return 0 if successful
 TEST_CASE("testing the actual prefix sum functions") {
     CHECK(prefix_sum(nums_1, sizeof(nums_1)/sizeof(nums_1[0])) == 4);
@@ -24,6 +27,7 @@ TEST_CASE("testing the actual prefix sum functions") {
     CHECK(prefix_sum(nums_6, sizeof(nums_6)/sizeof(nums_6[0])) == 0);
     CHECK(prefix_sum(nums_7, sizeof(nums_7)/sizeof(nums_7[0])) == 25);
     CHECK(prefix_sum(nums_8, sizeof(nums_8)/sizeof(nums_8[0])) == -25);
+    CHECK(prefix_sum(nums_9, sizeof(nums_9)/sizeof(nums_9[0])) == 2);
 }
 
 TEST_CASE("testing the sums function modifications") {
@@ -34,5 +38,6 @@ TEST_CASE("testing the sums function modifications") {
     CHECK(non_positive_sum(nums_5, sizeof(nums_5)/sizeof(nums_5[0])) == true);
     CHECK(non_negative_sum(nums_7, sizeof(nums_7)/sizeof(nums_7[0])) == true);
     CHECK(non_positive_sum(nums_8, sizeof(nums_8)/sizeof(nums_8[0])) == true);
-
+    CHECK(non_positive_sum(nums_9, sizeof(nums_9)/sizeof(nums_9[0])) == false);
+    CHECK(non_negative_sum(nums_9, sizeof(nums_9)/sizeof(nums_9[0])) == false);
 }
