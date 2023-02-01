@@ -1,3 +1,5 @@
+#define DOCTEST_CONFIG_IMPLEMENT
+#include "../doctest/doctest.h"
 #include "lab2.h"
 #include <iostream>
 #include "lab2.h"
@@ -56,7 +58,24 @@ int well_balanced_list_gen(int n, int times) {
     return success;
 }
 
-int main(){
+
+//MAIN FUNCTION. Includes overrides for 
+int main(int argc, char** argv){
+    doctest::Context context;
+    // Taken from DOCTEST
+    // defaults
+    context.addFilter("test-case-exclude", "*math*"); // exclude test cases with "math" in their name
+    context.setOption("abort-after", 5);              // stop test execution after 5 failed assertions
+    context.setOption("order-by", "name");            // sort the test cases by their name
+    context.applyCommandLine(argc, argv);
+    // overrides
+    context.setOption("no-breaks", true);             // don't break in the debugger when assertions fail
+    int res = context.run(); // run
+    if(context.shouldExit()) // important - query flags (and --exit) rely on the user doing this
+        return res;          // propagate the result of the tests
+    int client_stuff_return_code = 0;
+
+    //My Code
     int loop = 0;
     while(loop != -1){
         int n;
@@ -82,5 +101,20 @@ int main(){
         cout << "Ratio of Success/Attempts: " << successes / (float) att << "\n" << endl;
 
     }
-    return 0;
+    return res + client_stuff_return_code;
+}
+
+//TEST CASES
+int test1[] = {1,1,1,1,-1,-1,-1,-1}; //true
+int test2[] = {-1, 1, 1, -1, -1, 1}; //false
+int test3[] = {1,-1,1,-1,1,-1,1,-1,1,-1}; //true
+TEST_CASE("This test case checks if the list of 1's and -1s is well balanced using the function defined.") {
+    CHECK(check_well_balanced_list(test1, 8) == true);
+    CHECK(check_well_balanced_list(test2, 6) == false);
+    CHECK(check_well_balanced_list(test3, 10) == true);
+    
+}
+
+TEST_CASE("This checks that the full function works and checks for precision and accuracy.") {
+    CHECK(!((well_balanced_list_gen(64, 1000) / 1000.0) > 0.7)); // this value should be near to 0.6
 }
