@@ -1,6 +1,6 @@
 #include "lab2.h"
 #include <iostream>
-
+#include "lab2.h"
 
 using namespace std;
 
@@ -56,15 +56,31 @@ int well_balanced_list_gen(int n, int times) {
     return success;
 }
 
-
 int main(){
-    //Will create Unit Testing for each function in another file. This is mainly to check for the convergence.
-    //So with n=30, we will run the algorithm at least 10000 times.
-    cout << "Successes (n=30, att=1000): " << well_balanced_list_gen(30, 1000) << endl;
-    cout << "Successes (n=30, att=2000): " << well_balanced_list_gen(30, 2000) << endl;
-    cout << "Successes (n=30, att=4000): " << well_balanced_list_gen(30, 4000) << endl;
-    cout << "Successes (n=30, att=8000): " << well_balanced_list_gen(30, 8000) << endl;
-    cout << "Successes (n=30, att=16000): " << well_balanced_list_gen(30, 16000) << endl;
+    int loop = 0;
+    while(loop != -1){
+        int n;
+        cout << "Please enter an integer n (-1 to quit): ";
+        cin >> n;
+        if(n == -1){
+            loop = -1;
+            continue;
+        }
+        
+        //now we have n, get the number of attempts to create and check.
+        int att;
+        cout << "Please enter number of iterations: (-1 to quit): ";
+        cin >> att;
+        if(att == -1){
+            loop = -1;
+            continue;
+        }
 
+        //now we have n and number of attempts. Call function and return number of successes.
+        int successes = well_balanced_list_gen(n, att);
+        cout << "Number of successes for n=" << n << " and " << att << " attempts is " << successes << endl;
+        cout << "Ratio of Success/Attempts: " << successes / (float) att << "\n" << endl;
+
+    }
     return 0;
-} 
+}

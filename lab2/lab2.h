@@ -1,7 +1,7 @@
 #include "PrefixSum.h"
 
-#ifndef __PREFIX_SUM_H
-#define __PREFIX_SUM_H
+#ifndef __LAB2_FUNCS
+#define __LAB2_FUNCS
 /// @brief Takes the array provided and fills hald the array with 1's and half the array with -1's.
 /// @param array newly initialized array.
 /// @param length length of array
