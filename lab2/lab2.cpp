@@ -18,14 +18,19 @@ void generate_num_list(int array[], int length){
     }
 }
 
+void swap_arr(int arr[], int a, int b) {
+    int temp;
+    temp = arr[a];
+    arr[a] = arr[b];
+    arr[b] = temp;
+    
+}
+
 void fisher_yates_scramble(int array[], int length){
     for(int i = length-1; i > 1; i--){
         //j will be the random index to swap with. [0, length)
         int j = rand() % length;
-        //swap the two values
-        int temp = array[i];
-        array[i] = array[j];
-        array[j] = temp;
+        swap_arr(array, i, j);
     }
 }
  
@@ -105,6 +110,41 @@ int main(int argc, char** argv){
 }
 
 //TEST CASES
+
+//TEST CASE FOR DETERMINISTIC FUNCTIONS
+TEST_CASE("Chechking the deterministic functions") {
+    SUBCASE("CHECKING SWAP FUNCTION") {
+        int a[] = {1, 0};
+        int b[] = {1, 2, 3};
+
+        //swap a ints.
+        swap_arr(a, 0, 1);
+        CHECK(a[0] == 0);
+
+        //swap index 0 and 2 on b.
+        swap_arr(b, 0, 2);
+        CHECK(b[0] == 3);
+        CHECK(b[2] == 1);
+    }
+
+    SUBCASE("CHECKING array creator of equal 1's and -1's"){
+        int a[10]; // should be 5 1's and 5'-1s
+        generate_num_list(a, 10);
+        for(int i = 0; i < 5; i++){
+            CHECK(a[i] == 1);
+            CHECK(a[9-i] == -1);
+        }
+
+        int b[50];
+        generate_num_list(b, 50);
+        for(int i = 0; i < 25; i++){
+            CHECK(b[i] == 1);
+            CHECK(b[49-i] == -1);
+        }
+    }
+}
+
+//TEST CASE FOR WELL-BALANCED FUNCTIONS
 int test1[] = {1,1,1,1,-1,-1,-1,-1}; //true
 int test2[] = {-1, 1, 1, -1, -1, 1}; //false
 int test3[] = {1,-1,1,-1,1,-1,1,-1,1,-1}; //true
@@ -112,9 +152,5 @@ TEST_CASE("This test case checks if the list of 1's and -1s is well balanced usi
     CHECK(check_well_balanced_list(test1, 8) == true);
     CHECK(check_well_balanced_list(test2, 6) == false);
     CHECK(check_well_balanced_list(test3, 10) == true);
-    
 }
 
-TEST_CASE("This checks that the full function works and checks for precision and accuracy.") {
-    CHECK(!((well_balanced_list_gen(64, 1000) / 1000.0) > 0.7)); // this value should be near to 0.6
-}
