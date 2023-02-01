@@ -17,3 +17,8 @@ Please enter number of iterations: (-1 to quit): 50000
 Number of successes for n=20 and 50000 attempts is 5034
 Ratio of Success/Attempts: 0.10068
 ```
+
+The test cases are apart of the executable. It will run test cases first and then enter the program loop. Keep that in mind as it will as for an integer after the test cases.
+```
+./Lab2
+```
