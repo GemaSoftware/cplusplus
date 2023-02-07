@@ -1,27 +1,21 @@
 #include <iostream>
 #include "ECNumbers.h"
 #include "ECCalculator.h"
+#include "../doctest/doctest.h"
+#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 
 using namespace std;
 
-int main()
-{
-  // read in an integer n
-  // your code here
-    int test;
-    cin >> test;
+TEST_CASE("testing the square functions") {
+    CHECK(ECNumbers::ECSquareN(2) == 4);
+    CHECK(ECNumbers::ECSquareN(3) == 9);
+    CHECK(ECNumbers::ECSquareN(4) == 16);
+    CHECK(ECNumbers::ECSquareN(5) == 25);
+}
 
-  // print out the square of it
-  // your code here
-  cout << "Number Squared: " << ECNumbers::ECSquareN(test) << endl;
-
-  // print out 2n  
-  // your code here
-  cout << "Doubled N: " << ECNumbers::ECDoubleN(test) << endl;
-
-  // print out 4 times of n by invoking ECCalculator's function
-  // your code here
-  cout << "4 times the number: " << ECFourTimesN(test) << endl;
-
-  return 0;
+TEST_CASE("testing the double functions") {
+    CHECK(ECNumbers::ECDoubleN(3) == 6);
+    CHECK(ECNumbers::ECDoubleN(4) == 8);
+    CHECK(ECNumbers::ECDoubleN(5) == 10);
+    CHECK(ECNumbers::ECDoubleN(2) == 4);
 }
