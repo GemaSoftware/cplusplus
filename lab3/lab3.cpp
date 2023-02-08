@@ -40,7 +40,6 @@ void generate_final_array(int array[], int lowestIndex, int newArray[], int arle
     for(int b = 0; b < lowestIndex-1; b++) {
         newArray[arlen-lowestIndex+b] = array[b];
     }
-
 }
 
  
@@ -53,7 +52,7 @@ bool check_well_balanced_list(int array[], int length) {
 }
 
 int find_lowest_depth(int array[], int arrlen){
-    int lowest=0;
+    int lowest=array[0];
     int lowestIndex=0;
     for(int a = 0; a < arrlen; a++){
             if(prefix_sum(array, a) < lowest){
@@ -61,21 +60,37 @@ int find_lowest_depth(int array[], int arrlen){
                 lowestIndex = a;
         }
     }
+    //this ensures that we get the index of the lowest -1 we find.
+    if(lowestIndex > 0){
+        return lowestIndex - 1;
+    }
+    //handles edgecases
     return lowestIndex;
 }
 
-int main() {
+int main(int argc, char** argv) {
+    //add doctest unit tests before run.
+    doctest::Context context;
+    // Taken from DOCTEST
+    context.applyCommandLine(argc, argv);
+    int res = context.run(); // run
+    if(context.shouldExit()) // important - query flags (and --exit) rely on the user doing this
+        return res;          // propagate the result of the tests
+
+    //MAIN PROGRAM
     //take an input of n
      int n;
     cout << "Please enter an integer n (-1 to quit): ";
     cin >> n;
+    //exit the program if -1 entered.
+    if(n == -1){
+        return 0;
+    }
 
     int itter;
     cout << "Please enter an integer itter (-1 to quit): ";
     cin >> itter;
-
     int success = 0;
-
     for(int i = 0; i < itter; i++){
         //Given a list of 2𝑛 + 1 integers, fill the first 𝑛 elements with 1 and the next 𝑛+1 elements with -1
         int array[(2*n)+1];
@@ -103,8 +118,43 @@ int main() {
         }
         
     }
-
     cout << "Number of successes: " <<success << endl; 
-
     return 0;
+}
+
+//UNIT TESTS
+
+int t1[] = {};
+int t2[] = {-1};
+int t3[] = {1,1,-1,-1,-1,1,1,1};
+int t4[] = {1,1,-1,-1,-1,1,-1};
+
+TEST_CASE("This will check our new function to find the lowest depth index. Lowest index returns the index right after it "){
+    CHECK(find_lowest_depth(t2, 1) == 0);
+    CHECK(find_lowest_depth(t3, 8) == 4);
+    CHECK(find_lowest_depth(t4, 7) == 4);
+    SUBCASE("We will test our deterministic functions here by calling those indexes and checking the lowest value."){
+        CHECK(prefix_sum(t2, 1) == -1);
+        CHECK(prefix_sum(t3, 5) == -1);
+    }
+}
+
+TEST_CASE("Testing our Array Shift function"){
+    int t5[] = {1,1,-1,-1,-1,-1,1};//init len 7
+    int newArray[6]; // now of len 6
+    //our lowest dept returns the index of the element right after the lowest element,
+    generate_final_array(t5, 6, newArray, 7);
+    CHECK(newArray[0] == 1);
+    CHECK(newArray[3] == -1);
+    CHECK(check_well_balanced_list(newArray, 6));
+}
+
+//TEST CASE FOR WELL-BALANCED FUNCTIONS
+int test1[] = {1,1,1,1,-1,-1,-1,-1}; //true
+int test2[] = {-1, 1, 1, -1, -1, 1}; //false
+int test3[] = {1,-1,1,-1,1,-1,1,-1,1,-1}; //true
+TEST_CASE("This test case checks if the list of 1's and -1s is well balanced using the function defined.") {
+    CHECK(check_well_balanced_list(test1, 8) == true);
+    CHECK(check_well_balanced_list(test2, 6) == false);
+    CHECK(check_well_balanced_list(test3, 10) == true);
 }

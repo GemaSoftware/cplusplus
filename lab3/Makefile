@@ -13,7 +13,7 @@ clean:
 Lab3: lab3.o
 	$(CC) $(CFLAGS) -o Lab3 lab3.o $(PREFIXSUM)
 
-#UnitTestLab2: UnitTestLab2.o lab2.o
+#UnitTestLab3: UnitTestLab2.o lab2.o
 #	$(CC) $(CFLAGS) -o UnitTestLab2 UnitTestLab2.o lab2.o $(PREFIXSUM)
 
 lab3.o: lab3.cpp
@@ -21,4 +21,5 @@ lab3.o: lab3.cpp
 
 #UnitTestLab2.o: lab2.h UnitTestLab2.cpp
 #	$(CC) $(CFLAGS) $(INCLUDEWEEK2) -c UnitTestLab2.cpp
+
 
