@@ -146,6 +146,8 @@ TEST_CASE("Testing our Array Shift function"){
     generate_final_array(t5, 6, newArray, 7);
     CHECK(newArray[0] == 1);
     CHECK(newArray[3] == -1);
+    CHECK(newArray[4] == -1);
+    CHECK(newArray[5] == -1);
     CHECK(check_well_balanced_list(newArray, 6));
 }
 
