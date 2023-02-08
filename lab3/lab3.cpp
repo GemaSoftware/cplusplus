@@ -61,9 +61,6 @@ int find_lowest_depth(int array[], int arrlen){
         }
     }
     //this ensures that we get the index of the lowest -1 we find.
-    if(lowestIndex > 0){
-        return lowestIndex - 1;
-    }
     //handles edgecases
     return lowestIndex;
 }
@@ -131,8 +128,8 @@ int t4[] = {1,1,-1,-1,-1,1,-1};
 
 TEST_CASE("This will check our new function to find the lowest depth index. Lowest index returns the index right after it "){
     CHECK(find_lowest_depth(t2, 1) == 0);
-    CHECK(find_lowest_depth(t3, 8) == 4);
-    CHECK(find_lowest_depth(t4, 7) == 4);
+    CHECK(find_lowest_depth(t3, 8) == 5);
+    CHECK(find_lowest_depth(t4, 7) == 5);
     SUBCASE("We will test our deterministic functions here by calling those indexes and checking the lowest value."){
         CHECK(prefix_sum(t2, 1) == -1);
         CHECK(prefix_sum(t3, 5) == -1);
