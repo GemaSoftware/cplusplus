@@ -52,6 +52,18 @@ bool check_well_balanced_list(int array[], int length) {
     else return false;
 }
 
+int find_lowest_depth(int array[], int arrlen){
+    int lowest=0;
+    int lowestIndex=0;
+    for(int a = 0; a < arrlen; a++){
+            if(prefix_sum(array, a) < lowest){
+                lowest = prefix_sum(array, a);
+                lowestIndex = a;
+        }
+    }
+    return lowestIndex;
+}
+
 int main() {
     //take an input of n
      int n;
@@ -79,33 +91,20 @@ int main() {
         }
 
         // Find the lowest depth of any valley in this list of 2𝑛 + 1 elements
-        
-        int lowest = 0;
-        int lowestIndex = 0;
-        for(int a = 0; a < arrlen; a++){
-            if(prefix_sum(array, a) < lowest){
-                lowest = prefix_sum(array, a);
-                lowestIndex = a;
-            }
-        }
+        int lowestIndex = find_lowest_depth(array, arrlen);   
         //We now have the lowest depth and its index.
 
-        // Let P1 be the path down to the first occurrence of the lowest valley
-        // Let P2 be the start of the lowest valley to the end of the +1, -1 path
-        // Drop the last -1 edge from P1 give P1’
         // Create a new array of 2n that will store P2 and P1'
         int newArray[arrlen-1];
         generate_final_array(array, lowestIndex, newArray, arrlen);
-
+        //check if well balanced, if it is, add to number of successful.
         if(check_well_balanced_list(newArray, arrlen-1) == true){
             success+=1;
         }
-        // Put P2 in the front of a new list and attach the end of P2 to the start of P1’
-            //This new list is a well-balanced list
-            //Also all well-balanced lists of length 2𝑛 are generated with the same uniform probability
+        
     }
 
-    cout << "Number of successes: " <<success << endl;
+    cout << "Number of successes: " <<success << endl; 
 
     return 0;
 }
