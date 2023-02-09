@@ -1,16 +1,13 @@
 CC = g++
 CFLAGS = -Wall -g
 
-all: TestNumbers ECRemoveElement
+all: TestNumbers
 
 clean:
-	rm -f TestNumbers ECRemoveElement
+	rm -f TestNumbers ECRemoveElement *.o
 
-TestNumbers: TestNumbers.o ECNumbers.o ECCalculator.o
-	$(CC) $(CFLAGS) -o TestNumbers TestNumbers.o ECNumbers.o ECCalculator.o
-
-ECRemoveElement: ECRemoveElement.o
-	$(CC) $(CFLAGS) -o ECRemoveElement ECRemoveElement.o
+TestNumbers: TestNumbers.o ECNumbers.o ECCalculator.o ECRemoveElement.o
+	$(CC) $(CFLAGS) -o TestNumbers TestNumbers.o ECNumbers.o ECCalculator.o ECRemoveElement.o
 
 ECRemoveElement.o: ECRemoveElement.cpp
 	$(CC) $(CFLAGS) -c ECRemoveElement.cpp
