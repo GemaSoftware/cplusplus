@@ -19,20 +19,6 @@ void ECRemoveSpace(int nums[], int len, int val)
 }
 
 
-/*
-  // your code here
-  int i, backwards = len - 1;
-  while (i < backwards) {
-    if(nums[i] == val) {
-    int temp = nums[backwards];
-    nums[backwards] = nums[i];
-    nums[i] = temp;
-    backwards--;
-  } else {
-    i++;
-  }
-  }*/
-
 
 
 int main()
