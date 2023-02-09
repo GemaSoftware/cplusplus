@@ -31,14 +31,20 @@ void fisher_yates_scramble(int array[], int length){
     }
 }
 
+void print_array(int array[], int arlen){
+    for(int i = 0; i < arlen; i++){
+        cout << array[i] << " ";
+    }
+    cout << endl;
+}
+
 void generate_final_array(int array[], int lowestIndex, int newArray[], int arlen) {
-    //this places P2 at the front
-    for(int i = 0; i < arlen-lowestIndex; i++){
-        newArray[i] = array[lowestIndex+i];
+    for(int i = 0; i < arlen-1-lowestIndex; i++){
+        newArray[i] = array[lowestIndex+i+1];
     }
     //this takes start of P1->endofP1-1 and places in P2. This chops off one ending value from P1.
-    for(int b = 0; b < lowestIndex-1; b++) {
-        newArray[arlen-lowestIndex+b] = array[b];
+    for(int b = 0; b < lowestIndex; b++) {
+        newArray[arlen-1-lowestIndex+b] = array[b];
     }
 }
 
@@ -52,17 +58,25 @@ bool check_well_balanced_list(int array[], int length) {
 }
 
 int find_lowest_depth(int array[], int arrlen){
-    int lowest=array[0];
-    int lowestIndex=0;
-    for(int a = 0; a < arrlen; a++){
-            if(prefix_sum(array, a) < lowest){
-                lowest = prefix_sum(array, a);
-                lowestIndex = a;
+    //edge case, empty list or 1 element. index of lowest depth is 0.
+    if(arrlen == 0 || arrlen == 1){
+        return 0;
+    }
+
+    //second way of doing it witout prefix sum
+    int lowestsum = 0;
+    int currentsum=0;
+    int lowest = 0;
+
+    for(int i = 0; i < arrlen; i++){
+        currentsum += array[i];
+        if(currentsum < lowestsum){
+            lowestsum = currentsum;
+            lowest = i;
         }
     }
-    //this ensures that we get the index of the lowest -1 we find.
-    //handles edgecases
-    return lowestIndex;
+    //returns index of lowest prefic sum.
+    return lowest;
 }
 
 int main(int argc, char** argv) {
@@ -127,25 +141,25 @@ int t3[] = {1,1,-1,-1,-1,1,1,1};
 int t4[] = {1,1,-1,-1,-1,1,-1};
 
 TEST_CASE("This will check our new function to find the lowest depth index. Lowest index returns the index right after it "){
+    CHECK(find_lowest_depth(t1, 0) == 0);
+    CHECK(find_lowest_depth(t2, 0) == 0);
     CHECK(find_lowest_depth(t2, 1) == 0);
-    CHECK(find_lowest_depth(t3, 8) == 5);
-    CHECK(find_lowest_depth(t4, 7) == 5);
-    SUBCASE("We will test our deterministic functions here by calling those indexes and checking the lowest value."){
-        CHECK(prefix_sum(t2, 1) == -1);
-        CHECK(prefix_sum(t3, 5) == -1);
-    }
+    CHECK(find_lowest_depth(t3, 8) == 4);
+    CHECK(find_lowest_depth(t4, 7) == 4);
 }
 
 TEST_CASE("Testing our Array Shift function"){
     int t5[] = {1,1,-1,-1,-1,-1,1};//init len 7
     int newArray[6]; // now of len 6
     //our lowest dept returns the index of the element right after the lowest element,
-    generate_final_array(t5, 6, newArray, 7);
+    generate_final_array(t5, 5, newArray, 7);
     CHECK(newArray[0] == 1);
+    CHECK(newArray[1] == 1);
+    CHECK(newArray[2] == 1);
     CHECK(newArray[3] == -1);
     CHECK(newArray[4] == -1);
     CHECK(newArray[5] == -1);
-    CHECK(check_well_balanced_list(newArray, 6));
+    CHECK(check_well_balanced_list(newArray, 6) == true);
 }
 
 //TEST CASE FOR WELL-BALANCED FUNCTIONS
