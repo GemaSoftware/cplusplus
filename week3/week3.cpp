@@ -20,6 +20,8 @@ struct node* build_linked_list(int elements){
     return head;
 
 }
+
+
 void print_linked_list(struct node* list, int elements) {
     node* temp = list;
     for(int i = 0; i < elements; i++){

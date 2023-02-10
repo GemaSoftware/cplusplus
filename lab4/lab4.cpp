@@ -36,6 +36,26 @@ struct node * build_linked_list(const int elements) {
     return root;
 }
 
+
+struct node * build_linked_list_alternative(const int elements) {
+    struct node* temp = new node;
+    temp->number = elements-1;
+    //store refrence to last pointer.
+    node* last_pointer = temp;
+    last_pointer->next = temp;
+    last_pointer->jump = temp;
+    //we are building the list backwards to O(n)
+    for(int i = elements-1; i >0; i--){
+        node* newNode = new node;
+        newNode->next = temp;
+        newNode->jump = last_pointer;
+        newNode->number = i-1;
+        temp = newNode;
+    }
+    //linked list is still pointing at the root node.
+    return temp;
+}
+
 struct node * pointer_jump_linked_list(struct node * linked_list) {
   return linked_list->jump;
 }

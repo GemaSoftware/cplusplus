@@ -29,3 +29,16 @@ TEST_CASE("Testing a larger linked list and each jump to point to final node.") 
     //delete the linked list for memory collection
     CHECK(delete_linked_list(test2, 50) == 50);
 }
+
+TEST_CASE("Testing alternative way to build the LL. Saves time and complxity"){
+    node* test3 = build_linked_list_alternative(10);
+    node* temp_pointer = test3;
+    for(int i = 0; i < 10; i++){
+        CHECK(temp_pointer->jump->number == 9);
+        CHECK(temp_pointer->number == i);
+        temp_pointer = temp_pointer->next;
+    }
+    CHECK(sum_values_in_linked_list(test3, 10) == 45);//0->49
+    //delete the linked list for memory collection
+    CHECK(delete_linked_list(test3, 10) == 10);
+}
