@@ -7,6 +7,11 @@ TEST_CASE("Testing LAB5 Functions"){
     double_vector v2{2, 2.1, 7.6};
     double_vector v3{3, 3.0, 4.0};
 
+    SUBCASE("Testing input edge case - empty file"){
+        //file name of blank is blank_vectors.txt
+        CHECK_THROWS(read_vectors("vectors/blank_vectors.txt"));
+    }
+
     SUBCASE("Testing magnitude calculations"){
         CHECK(vec_magnitude(v1) == doctest::Approx(3.3541)); //sqrt(1.5^2 + 3.0^2)
         CHECK(vec_magnitude(v2) == doctest::Approx(7.8848)); //sqrt(2.1^2 + 7.6&2)
