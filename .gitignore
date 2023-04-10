@@ -32,4 +32,4 @@
 *.app
 
 #ignore bigint folder
-bigint/
+bigint.h
