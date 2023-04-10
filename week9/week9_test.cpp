@@ -11,5 +11,4 @@ TEST_CASE("Testing creating the List struct and its functions"){
     CHECK(x->head->next->data == 2);
     CHECK(x->head->next->next->data == 1);
     delete x;
-
 }
